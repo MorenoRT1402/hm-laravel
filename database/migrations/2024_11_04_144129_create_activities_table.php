@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('type', ["surf", "windsurf", "kayak", "atv", "hot air balloon"]);
             $table->dateTime('datetime');
             $table->boolean('paid')->default(false);

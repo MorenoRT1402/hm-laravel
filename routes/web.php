@@ -20,5 +20,4 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('activities', ActivityController::class);
 
-
 require __DIR__.'/auth.php';

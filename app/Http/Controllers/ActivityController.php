@@ -2,23 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
     public function index()
     {
-        return "Listado de actividades";
+        return view("activities/index");
     }
 
     public function create()
     {
-        return "Formulario para crear una nueva actividad";
+        return view("activities.create");
     }
 
     public function store(Request $request)
     {
-        return "Guardando nueva actividad";
+        $request->validate([
+            'type' => ['required', 'string'],
+            'datetime' => ['required', 'string'],
+            'notes' => ['required', 'string'],
+        ]);
+
+        Activity::create([
+            'type' => $request->input('type'),
+            'user_id' => $request->user()->id,
+            'datetime' => $request->input('datetime'),
+            'notes' => $request->input('notes'),
+        ]);
+        return redirect(route('activities.store'));
     }
 
     public function show($id)
