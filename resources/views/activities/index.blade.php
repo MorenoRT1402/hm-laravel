@@ -1,6 +1,10 @@
 <h1><strong>Actividades</strong></h1>
 @foreach($activities as $activity)
-<p><strong> Tipo: </strong> {{$activity->type}} </p>
-<p><strong> Fecha: </strong> {{$activity->datetime}} </p>
-<br>
+    @include('activities._activity_details', ['activity' => $activity])
+
+    <a href="{{ route('activities.show', $activity->id) }}">Ver Detalles</a>
+
+    <a href="{{ route('activities.edit', $activity->id) }}">Editar</a>
+    
+    <br>
 @endforeach

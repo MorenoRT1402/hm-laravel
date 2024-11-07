@@ -1,5 +1,12 @@
 <h1>Detalle de Actividad</h1>
-<p><strong>Tipo:</strong> {{ $activity->type }}</p>
-<p><strong>Fecha y Hora:</strong> {{ $activity->datetime }}</p>
-<p><strong>Notas:</strong> {{ $activity->notes }}</p>
+@include('activities._activity_details')
+
+<form action="{{ route('activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('DELETE')
+    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta actividad?')">
+        Eliminar Actividad
+    </button>
+</form>
+
 <a href="{{ route('activities.index') }}">Volver al listado de actividades</a>

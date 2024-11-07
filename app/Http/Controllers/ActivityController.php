@@ -8,6 +8,20 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
+    private function validation($request){
+        $request->validate([
+            'type' => 'required|string',
+            'datetime' => 'required|string',
+            'notes' => 'nullable|string',
+        ]);
+    }
+
+    private function checkUserPermission(Activity $activity){
+        if ($activity->user_id !== Auth::id()) {
+            abort(403, 'No tienes permiso para acceder a esta actividad.');
+        }
+    }
+
     public function index()
     {
         if (!Auth::check()) {
@@ -25,11 +39,8 @@ class ActivityController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'type' => ['required', 'string'],
-            'datetime' => ['required', 'string'],
-            'notes' => ['required', 'string'],
-        ]);
+
+        $this->validation($request);
 
         Activity::create([
             'type' => $request->input('type'),
@@ -45,9 +56,7 @@ class ActivityController extends Controller
         // We try to find the activity by its ID, and if it doesn't exist, it will throw a 404.
         $activity = Activity::findOrFail($id);
     
-        if ($activity->user_id !== Auth::id()) {
-            abort(403, 'No tienes permiso para ver esta actividad.');
-        }
+        $this->checkUserPermission($activity);
         
         return view('activities.show', compact('activity'));
     }
@@ -55,16 +64,42 @@ class ActivityController extends Controller
 
     public function edit($id)
     {
-        return "Formulario para editar la actividad con ID: $id";
+        $activity = Activity::findOrFail($id);
+    
+        $this->checkUserPermission($activity);
+    
+        return view('activities.edit', compact('activity'));
     }
+    
 
     public function update(Request $request, $id)
     {
-        return "Actualizando la actividad con ID: $id";
+        $activity = Activity::findOrFail($id);
+    
+        $this->checkUserPermission($activity);
+    
+        $this->validation($request);
+    
+        $activity->update([
+            'type' => $request->input('type'),
+            'datetime' => $request->input('datetime'),
+            'notes' => $request->input('notes'),
+        ]);
+    
+        return redirect()->route('activities.show', $activity->id)
+                         ->with('success', 'Actividad actualizada correctamente.');
     }
-
+    
     public function destroy($id)
     {
-        return "Eliminando la actividad con ID: $id";
+        $activity = Activity::findOrFail($id);
+    
+        $this->checkUserPermission($activity);
+    
+        $activity->delete();
+    
+        return redirect()->route('activities.index')
+                         ->with('success', 'Actividad eliminada correctamente.');
     }
+    
 }
