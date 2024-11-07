@@ -10,8 +10,13 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        return view("activities/index", ['activities'=>Auth::user()->activities()->get()]);
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+    
+        return view("activities.index", ['activities' => Auth::user()->activities()->get()]);
     }
+    
 
     public function create()
     {
@@ -37,8 +42,16 @@ class ActivityController extends Controller
 
     public function show($id)
     {
-        return "Mostrando la actividad con ID: $id";
+        // We try to find the activity by its ID, and if it doesn't exist, it will throw a 404.
+        $activity = Activity::findOrFail($id);
+    
+        if ($activity->user_id !== Auth::id()) {
+            abort(403, 'No tienes permiso para ver esta actividad.');
+        }
+        
+        return view('activities.show', compact('activity'));
     }
+    
 
     public function edit($id)
     {
