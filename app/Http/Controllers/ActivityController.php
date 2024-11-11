@@ -32,9 +32,9 @@ class ActivityController extends Controller
     }
     
 
-    public function create()
-    {
-        return view("activities.create");
+    public function create(){
+        $method = 'POST';
+        return view("activities.create", compact('method'));
     }
 
     public function store(Request $request)
@@ -62,13 +62,14 @@ class ActivityController extends Controller
     }
     
 
-    public function edit($id)
-    {
+    public function edit($id){
+        $method = 'PUT';
         $activity = Activity::findOrFail($id);
+        $back_index = true;
     
         $this->checkUserPermission($activity);
     
-        return view('activities.edit', compact('activity'));
+        return view('activities.edit', compact('method', 'activity', 'back_index'));
     }
     
 
