@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->enum('room_type',['Normal','Deluxe A', 'Deluxe B', 'Deluxe C ', 'Duplex','Suite']);
+            $table->enum('room_type', config('params.room_types'));
             $table->integer('number');
-            $table->string('picture');
-            $table->enum('bed_type',['Single bed','Double bed','Double Superior','Suite']);
-            $table->enum('room_floor',['A1','A2','A3','B1','B2','B3']);
+            $table->string('picture')->nullable();
+            $table->enum('bed_type', config('params.bed_types'));
+            $table->string('room_floor');
             $table->json('facilities');
             $table->decimal('rate',10, 2);
-            $table->decimal('discount',10,2);
-            $table->enum('status',['Available','Booked']);
+            $table->decimal('discount',10,2)->nullable();
+            $table->enum('status', config('params.room_status'));
             $table->timestamps();
         });
     }

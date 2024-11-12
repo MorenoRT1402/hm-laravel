@@ -16,7 +16,6 @@ abstract class BaseController extends Controller
         $request->validate($this->validation);
     }
 
-    // Verificación condicional de permisos de usuario
     protected function checkUserPermission($model)
     {
         if ($this->userCheck && isset($model->user_id) && $model->user_id !== Auth::id()) {
@@ -30,7 +29,7 @@ abstract class BaseController extends Controller
             return redirect()->route('login');
         }
 
-        // Filtrar por usuario solo si se requiere verificar user_id
+        // Filter by user only if checking user_id is required
         $items = $this->userCheck
             ? Auth::user()->{$this->modelClass::tableName()}()->get()
             : $this->modelClass::all();
@@ -48,10 +47,8 @@ abstract class BaseController extends Controller
     {
         $this->validateRequest($request);
 
-        // Obtener datos dinámicamente
         $data = $request->only(array_keys($this->validation));
         
-        // Asignar user_id automáticamente solo si $userCheck es true
         if ($this->userCheck && Auth::check()) {
             $data['user_id'] = Auth::id();
         }

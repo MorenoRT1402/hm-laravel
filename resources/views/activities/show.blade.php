@@ -1,5 +1,5 @@
 <h1>Detalle de Actividad</h1>
-@include('activities._activity_details')
+@include('activities._details')
 
 <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
     @csrf

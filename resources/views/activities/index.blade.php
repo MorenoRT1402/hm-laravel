@@ -1,7 +1,7 @@
 <h1><strong>Actividades</strong></h1>
 <a href="{{ route('activities.create') }}">Crear Actividad</a>
 @foreach($activities as $activity)
-    @include('activities._activity_details', ['activity' => $activity])
+    @include('activities._details', ['activity' => $activity])
 
     <a href="{{ route('activities.show', $activity->id) }}">Ver Detalles</a>
 

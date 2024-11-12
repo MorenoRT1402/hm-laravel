@@ -6,27 +6,25 @@ use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Faker\Factory as FakerFactory;
 
 class ActivitySeeder extends Seeder
 {
-    public function run()
-    {
+    public function run(): void {
+        $faker = FakerFactory::create('es_ES');
+        $count = 20;
+        $activities = [];
+
         $users = User::all();
 
-        foreach ($users as $user) {
-            Activity::create([
-                'type' => 'surf',
+        for ($i = 0; $i<$count; $i++){
+            $activities[] = [
+                'type' => $faker->randomElement(['surf', 'windsurf', 'kayak', 'atv', 'hot air balloon']),
                 'datetime' => Carbon::now()->addDays(rand(1, 30)),
-                'notes' => 'Actividad de prueba',
-                'user_id' => $user->id,
-            ]);
-
-            Activity::create([
-                'type' => 'windsurf',
-                'datetime' => Carbon::now()->addDays(rand(1, 30)),
-                'notes' => 'Otra actividad de prueba',
-                'user_id' => $user->id,
-            ]);
+                'notes' => $faker->text(100),
+                'user_id' => $users->random()->id,
+            ];
         }
+        Activity::insert($activities);
     }
 }
