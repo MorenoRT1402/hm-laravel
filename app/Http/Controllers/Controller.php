@@ -46,4 +46,11 @@ abstract class Controller{
         
         return view("$this->view_root.edit", compact('method', 'data', 'back_index'));
     }
+
+    public function destroy($id){
+        $data = $this->modelClass::findOrFail($id);
+        $data->delete();
+        return redirect(route("$this->view_root.index"))
+               ->with('success', 'Eliminado correctamente.');
+    }
 }

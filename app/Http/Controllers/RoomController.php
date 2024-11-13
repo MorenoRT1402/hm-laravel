@@ -24,13 +24,12 @@ class RoomController extends Controller{
         'status' => 'required|string',
     ];
 
-    public function store(Request $request){
-
-        $this->validation($request, $this->validation);
+    private function prepareRoomData(Request $request){
+        $this->validate($request, $this->validation);
 
         $floor = $request->input('floor_letter') . $request->input('floor_number');
 
-        Room::create([
+        return [
             'type' => $request->input('type'),
             'number' => $request->input('number'),
             'picture' => $request->input('picture'),
@@ -40,40 +39,20 @@ class RoomController extends Controller{
             'rate' => $request->input('rate'),
             'discount' => $request->input('discount', 0),
             'status' => $request->input('status'),
-        ]);
-
-        return redirect(route("$this->view_root.store"));
+        ];
     }
 
-    public function update(Request $request, $id)
-    {
-        $activity = Activity::findOrFail($id);
-    
-        $this->checkUserPermission($activity);
-    
-        $this->validation($request);
-    
-        $activity->update([
-            'type' => $request->input('type'),
-            'datetime' => $request->input('datetime'),
-            'notes' => $request->input('notes'),
-        ]);
-    
-        return redirect()->route('activities.show', $activity->id)
-                         ->with('success', 'Actividad actualizada correctamente.');
+    public function store(Request $request){
+        $data = $this->prepareRoomData($request);
+        Room::create($data);
+        return redirect(route("$this->view_root.index"))->with('success', 'Habitación creada correctamente.');
     }
-    
-    public function destroy($id)
-    {
-        $activity = Activity::findOrFail($id);
-    
-        $this->checkUserPermission($activity);
-    
-        $activity->delete();
-    
-        return redirect()->route('activities.index')
-                         ->with('success', 'Actividad eliminada correctamente.');
-    }
-    
+
+    public function update(Request $request, $id){
+        $data = $this->prepareRoomData($request);
+        $room = Room::findOrFail($id);
+        $room->update($data);
+        return redirect(route("$this->view_root.show", $id))->with('success', 'Habitación actualizada correctamente.');
+    }  
 }
 
