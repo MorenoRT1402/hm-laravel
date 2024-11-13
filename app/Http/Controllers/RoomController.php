@@ -45,28 +45,6 @@ class RoomController extends Controller{
         return redirect(route("$this->view_root.store"));
     }
 
-    public function show($id)
-    {
-        // We try to find the activity by its ID, and if it doesn't exist, it will throw a 404.
-        $activity = Activity::findOrFail($id);
-    
-        $this->checkUserPermission($activity);
-        
-        return view('activities.show', compact('activity'));
-    }
-    
-
-    public function edit($id){
-        $method = 'PUT';
-        $activity = Activity::findOrFail($id);
-        $back_index = true;
-    
-        $this->checkUserPermission($activity);
-    
-        return view('activities.edit', compact('method', 'activity', 'back_index'));
-    }
-    
-
     public function update(Request $request, $id)
     {
         $activity = Activity::findOrFail($id);

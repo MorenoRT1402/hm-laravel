@@ -2,6 +2,12 @@
 <p><strong>ID:</strong> {{ $room->id }}</p>
 <p><strong>Cama:</strong> {{ $room->bed_type }}</p>
 <p><strong>Planta:</strong> {{ $room->floor }}</p>
+<p><strong>Instalaciones:</strong></p>
+<ul>
+    @foreach(json_decode($room->facilities) as $facility)
+        <li>{{ $facility }}</li>
+    @endforeach
+</ul>
 <p><strong>Precio:</strong> {{ $room->rate }}</p>
 <p><strong>Descuento:</strong> {{ $room->discount }}</p>
 <p><strong>Status:</strong> {{ $room->status }}</p>
