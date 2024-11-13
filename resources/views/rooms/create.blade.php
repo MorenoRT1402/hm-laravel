@@ -1,6 +1,6 @@
 <h1>Room Create</h1>
 
-    <form method="post" action="{{route('room.store')}}">
+    <form method="post" action="{{route('rooms.store')}}">
     @csrf
     @method('post') 
 
@@ -41,10 +41,10 @@
     </select>
     <br/>
     <br/>
-    <input name="rate" type="number" placeholder="Introduce un numero" min=100 max=500/>
+    <input name="rate" type="number" placeholder="Introduce un precio" min=0 max=500/>
     <br/>
     <br/>
-    <input name="discount" type="number" placeholder="Introduce un numero" min=0 max=20/>
+    <input name="discount" type="number" placeholder="Descuento" min=0 max=20/>
     <br/>
     <br/>
     <button type="submit">Enviar</button>

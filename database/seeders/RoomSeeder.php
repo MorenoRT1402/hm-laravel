@@ -23,12 +23,12 @@ class RoomSeeder extends Seeder
         foreach (range(1, $count) as $index) {
             $room_floor = $faker->randomElement($letters) . $faker->numberBetween($minNumber, $maxNumber);
             $rooms[] = [
-                'room_type' => $faker->randomElement(config('params.room_types')),
+                'type' => $faker->randomElement(config('params.room_types')),
                 'number' => $faker->numberBetween(0, 999),
                 'picture' => $faker->imageUrl(640, 480, 'room', true),
                 'bed_type' => $faker->randomElement(config('params.bed_types')),
                 
-                'room_floor' => $room_floor,
+                'floor' => $room_floor,
                 
                 'facilities' => json_encode($faker->randomElements(config('params.facilities')
                 , $faker->numberBetween(0, 5))),
