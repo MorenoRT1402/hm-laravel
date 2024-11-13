@@ -8,6 +8,8 @@
     <section>
         <a href="{{ route('activities.index')}}">Actividades</a>
         |
-        <a href="{{ route('rooms.index')}}">Rooms</a>
+        <a href="{{ route('rooms.index')}}">Habitaciones</a>
+        |
+        <a href="{{ route('contacts.index')}}">Mensajes</a>
     </section>
 </x-app-layout>

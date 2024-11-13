@@ -5,61 +5,50 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
-class ContactController extends Controller
+class ContactController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    protected $view_root = "contacts";
+    protected $modelClass = Contact::class;
+    protected $userCheck = false;
+    
+    protected $validation = [
+        'customer' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'nullable|string|max:20',
+        'subject' => 'required|string|max:255',
+        'comment' => 'required|string|max:1000',
+    ];
+
+    private function prepareData(Request $request){
+
+        $this->validate($request, $this->validation);
+
+        return [
+            'date' => now(),
+            'customer' => $request->input('customer'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'subject' => $request->input('subject'),
+            'comment' => $request->input('comment'),
+            'archived' => $request->input('archived', false),
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request){
+        $data = $this->prepareData($request);
+
+        Contact::create($data);
+
+        return redirect(route("$this->view_root.index"))->with('success', 'Contacto creado correctamente.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function update(Request $request, $id){
+        $data = $this->prepareData($request);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contact $contact)
-    {
-        //
-    }
+        $contact = Contact::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contact $contact)
-    {
-        //
-    }
+        $contact->update($data);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Contact $contact)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contact $contact)
-    {
-        //
-    }
+        return redirect(route("$this->view_root.show", $id))->with('success', 'Contacto actualizado correctamente.');
+    }  
 }

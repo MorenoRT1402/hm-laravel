@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller{    
+class RoomController extends BaseController{    
     protected $view_root = "rooms";
     protected $modelClass = Room::class;
     protected $userCheck = false;
