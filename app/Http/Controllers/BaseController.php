@@ -45,13 +45,22 @@ abstract class BaseController extends Controller
 
     public function store(Request $request)
     {
+        // return view('dump', ['dump' => dd($request)]);
         $this->validateRequest($request);
-
+        return view('dump', ['dump' => dd($request->only(array_keys($this->validation)))]);
+        
         $data = $request->only(array_keys($this->validation));
         
         if ($this->userCheck && Auth::check()) {
             $data['user_id'] = Auth::id();
         }
+
+        $data = [
+            'type' => $request->input('type'),
+            'user_id' => $request->user()->id,
+            'datetime' => $request->input('datetime'),
+            'notes' => $request->input('notes'),
+        ];
 
         $this->modelClass::create($data);
 

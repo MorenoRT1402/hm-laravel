@@ -6,8 +6,8 @@ use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ActivityController extends Controller
-{
+class ActivityController extends Controller{
+    
     private function validation($request){
         $request->validate([
             'type' => 'required|string',
@@ -37,8 +37,7 @@ class ActivityController extends Controller
         return view("activities.create", compact('method'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
 
         $this->validation($request);
 

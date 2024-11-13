@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->enum('bed_type', config('params.bed_types'));
             $table->string('floor');
-            $table->json('facilities');
+            $table->json('facilities')->nullable();
             $table->decimal('rate',10, 2);
-            $table->decimal('discount',10,2)->nullable();
+            $table->decimal('discount',10,2)->default(0);
             $table->enum('status', config('params.room_status'));
             $table->timestamps();
         });
