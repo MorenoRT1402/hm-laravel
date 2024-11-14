@@ -13,7 +13,7 @@ abstract class BaseController extends Controller{
         $this->validation($request, $this->rules);
         return $this->get_data($request);
     }
-
+    
     public function store(Request $request){
         $data = $this->prepareData($request);
 

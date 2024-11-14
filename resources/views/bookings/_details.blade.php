@@ -29,8 +29,6 @@
                 </div>
             @endif
 
-            <hr>
-
             <div class="mb-3">
                 <h5>Detalles Adicionales</h5>
                 <p><strong>Comentarios:</strong></p>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('check_in');
             $table->date('check_out');
             $table->decimal('discount', 5, 2);
-            $table->json('notes')->nullable();
+            $table->text('notes')->nullable();
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
             $table->enum('status', config('params.booking_status'));
             $table->timestamps();

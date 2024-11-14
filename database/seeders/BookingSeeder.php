@@ -29,7 +29,7 @@ class BookingSeeder extends Seeder
                 'check_in' => Carbon::parse($faker->date())->addDays(rand(1, 10))->toDateString(),
                 'check_out' => Carbon::parse($faker->date())->addDays(rand(11, 20))->toDateString(),
                 'discount' => $faker->randomFloat(2, 0, 50),
-                'notes' => json_encode($faker->paragraphs(2)),
+                'notes' => implode(' ', $faker->paragraphs(2)),
                 'room_id' => $rooms->random()->id,
                 'status' => collect(config('params.booking_status'))->random(),
             ];

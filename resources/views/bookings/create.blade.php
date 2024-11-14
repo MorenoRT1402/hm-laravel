@@ -1,5 +1,5 @@
-@extends('contacts.form')
+@extends('bookings.form')
 
-<h1>Crear Mensaje</h1>
+<h1>Crear Reserva</h1>
 
-@section('form_action', route('contacts.store'))
+@section('form_action', route('bookings.store'))
