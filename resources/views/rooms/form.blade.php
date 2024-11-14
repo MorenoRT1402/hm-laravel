@@ -1,6 +1,6 @@
-<form method="post" action="{{ route('rooms.store') }}">
+<form action="@yield('form_action')" method="POST">
     @csrf
-    @method('post') 
+    @method($method ?? 'POST')
 
     <select name="type" required>
         @foreach(config('params.room_types') as $roomType)

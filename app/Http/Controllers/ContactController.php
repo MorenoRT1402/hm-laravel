@@ -11,7 +11,7 @@ class ContactController extends BaseController
     protected $modelClass = Contact::class;
     protected $userCheck = false;
     
-    protected $validation = [
+    protected $rules = [
         'customer' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'phone' => 'nullable|string|max:20',
@@ -19,12 +19,8 @@ class ContactController extends BaseController
         'comment' => 'required|string|max:1000',
     ];
 
-    private function prepareData(Request $request){
-
-        $this->validate($request, $this->validation);
-
+    protected function get_data(Request $request){
         return [
-            'date' => now(),
             'customer' => $request->input('customer'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
@@ -33,22 +29,4 @@ class ContactController extends BaseController
             'archived' => $request->input('archived', false),
         ];
     }
-
-    public function store(Request $request){
-        $data = $this->prepareData($request);
-
-        Contact::create($data);
-
-        return redirect(route("$this->view_root.index"))->with('success', 'Contacto creado correctamente.');
-    }
-
-    public function update(Request $request, $id){
-        $data = $this->prepareData($request);
-
-        $contact = Contact::findOrFail($id);
-
-        $contact->update($data);
-
-        return redirect(route("$this->view_root.show", $id))->with('success', 'Contacto actualizado correctamente.');
-    }  
 }

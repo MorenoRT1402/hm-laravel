@@ -72,8 +72,7 @@ class ActivityController extends Controller{
     }
     
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $activity = Activity::findOrFail($id);
     
         $this->checkUserPermission($activity);

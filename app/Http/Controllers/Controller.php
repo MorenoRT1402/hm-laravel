@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 abstract class Controller{
 
@@ -46,4 +47,14 @@ abstract class Controller{
         
         return view("$this->view_root.edit", compact('method', 'data', 'back_index'));
     }
+
+    public function update(Request $request, $id){
+        $data = $this->prepareData($request);
+
+        $to_update = $this->modelClass::findOrFail($id);
+
+        $to_update->update($data);
+
+        return redirect(route("$this->view_root.show", $id))->with('success', 'Actualizado correctamente.');
+    }  
 }

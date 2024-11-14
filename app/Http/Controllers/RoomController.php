@@ -10,7 +10,7 @@ class RoomController extends BaseController{
     protected $modelClass = Room::class;
     protected $userCheck = false;
     
-    protected $validation = [
+    protected $rules = [
         'type' => 'required|string',
         'number' => 'required|integer',
         'picture' => 'nullable|string',
@@ -24,11 +24,9 @@ class RoomController extends BaseController{
         'status' => 'required|string',
     ];
 
-    private function prepareRoomData(Request $request){
-        $this->validate($request, $this->validation);
-
+    protected function get_data(Request $request){
+        
         $floor = $request->input('floor_letter') . $request->input('floor_number');
-
         return [
             'type' => $request->input('type'),
             'number' => $request->input('number'),
@@ -40,19 +38,7 @@ class RoomController extends BaseController{
             'discount' => $request->input('discount', 0),
             'status' => $request->input('status'),
         ];
-    }
 
-    public function store(Request $request){
-        $data = $this->prepareRoomData($request);
-        Room::create($data);
-        return redirect(route("$this->view_root.index"))->with('success', 'Habitación creada correctamente.');
     }
-
-    public function update(Request $request, $id){
-        $data = $this->prepareRoomData($request);
-        $room = Room::findOrFail($id);
-        $room->update($data);
-        return redirect(route("$this->view_root.show", $id))->with('success', 'Habitación actualizada correctamente.');
-    }  
 }
 
