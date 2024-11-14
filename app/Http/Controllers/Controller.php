@@ -36,7 +36,7 @@ abstract class Controller{
     public function show($id){
         // We try to find the model by its ID, and if it doesn't exist, it will throw a 404.
         $data = $this->modelClass::findOrFail($id);
-            
+        
         return view("$this->view_root.show", compact('data'));
     }
 
@@ -47,12 +47,12 @@ abstract class Controller{
         
         return view("$this->view_root.edit", compact('method', 'data', 'back_index'));
     }
-
+    
     public function update(Request $request, $id){
         $data = $this->prepareData($request);
-
+        
         $to_update = $this->modelClass::findOrFail($id);
-
+        
         $to_update->update($data);
 
         return redirect(route("$this->view_root.show", $id))->with('success', 'Actualizado correctamente.');

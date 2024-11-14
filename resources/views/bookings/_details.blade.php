@@ -33,11 +33,7 @@
                 <h5>Detalles Adicionales</h5>
                 <p><strong>Comentarios:</strong></p>
                 <p>
-                    @if(is_array($booking->notes) && count($booking->notes) > 0)
-                        {!! implode('<br>', $booking->notes) !!}
-                    @else
-                        No hay comentarios adicionales
-                    @endif
+                    {{$booking->notes}}
                 </p>
             </div>
 

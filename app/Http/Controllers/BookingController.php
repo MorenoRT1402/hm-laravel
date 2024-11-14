@@ -29,7 +29,7 @@ class BookingController extends BaseController{
             'check_in' => $request->input('check_in'),
             'check_out' => $request->input('check_out'),
             'discount' => $request->input('discount'),
-            'notes' => json_encode($request->input('notes')), 
+            'notes' => $request->input('notes'), 
             'status' => $request->input('status'),
             'room_id' => $request->input('room_id'),
         ];

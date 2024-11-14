@@ -1,7 +1,7 @@
 <h1>Detalle de Contact</h1>
-@include('contacts._details', ['contact' => $data])
+@include('bookings._details', ['booking' => $data])
 
-<form action="{{ route('contacts.destroy', $data->id) }}" method="POST" style="display:inline;">
+<form action="{{ route('bookings.destroy', $data->id) }}" method="POST" style="display:inline;">
     @csrf
     @method('DELETE')
     <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminarlo?')">
@@ -9,4 +9,4 @@
     </button>
 </form>
 
-<a href="{{ route('contacts.index') }}">Volver al index</a>
+<a href="{{ route('bookings.index') }}">Volver al index</a>

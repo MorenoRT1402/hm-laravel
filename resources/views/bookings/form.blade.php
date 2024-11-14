@@ -23,7 +23,7 @@
     <br/><br/>
 
     <label for="notes">Notes:</label>
-    <textarea name="notes" placeholder="Add notes" rows="4">{{ old('notes', '') }}</textarea>
+    <textarea name="notes" placeholder="Add notes" rows="4">{{ old('notes', $data->notes ?? '') }}</textarea>
     <br/><br/>
 
     <label for="room_id">Room:</label>
