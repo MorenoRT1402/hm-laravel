@@ -30,4 +30,10 @@ return [
         'WiFi', 'Air Conditioning', 'Television', 
         'Minibar', 'Safe', 'Coffee Maker', 'Room Service'
     ],
+    'booking_status' => [
+        'Pending',
+        'Booked',
+        'Cancelled',
+        'Refund'
+    ],
 ];
