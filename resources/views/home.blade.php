@@ -11,5 +11,7 @@
         <a href="{{ route('rooms.index')}}">Habitaciones</a>
         |
         <a href="{{ route('contacts.index')}}">Mensajes</a>
+        |
+        <a href="{{ route('bookings.index')}}">Reservas</a>
     </section>
 </x-app-layout>
