@@ -19,11 +19,17 @@ class TableController extends Controller{
         }
 
         $model = $models[$resource];
-        $data = $model::all();
+        $firstRecord = $model::first();
 
-        $headers = array_keys($data->first()->getAttributes());
+        if (!$firstRecord) {
+            return view('table', ['headers' => [], 'data' => []]);
+        }
 
-        $data = $data->map->toArray();
+        $allAttributes = array_keys($firstRecord->getAttributes());
+        $hiddenAttributes = $firstRecord->getHidden();
+        $headers = array_diff($allAttributes, $hiddenAttributes);
+
+        $data = $model::all()->map->only($headers)->toArray();
 
         return view('table', compact('headers', 'data'));
     }
