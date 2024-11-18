@@ -10,4 +10,8 @@ class Room extends Model
         "type", "number", "picture", "bed_type", "floor", "facilities", 
         "rate", "discount", "status"
     ];
+
+    // public function booking() : HasMany {
+    //     return $this->belongsTo(Room::class);
+    // }
 }
