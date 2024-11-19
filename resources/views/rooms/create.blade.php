@@ -1,5 +1,5 @@
 @extends('rooms.form')
 
-<h1>Crear Habitación</h1>
-
+@section('title', 'Crear Habitación')
 @section('form_action', route('rooms.store'))
+@section('button_text', 'Crear')
