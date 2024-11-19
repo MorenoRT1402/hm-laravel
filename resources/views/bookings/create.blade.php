@@ -2,4 +2,4 @@
 
 <h1>Crear Reserva</h1>
 
-@section('form_action', route('bookings.store'))
+@section('form_action', route('bookings.provide_store'))

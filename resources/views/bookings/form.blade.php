@@ -19,7 +19,7 @@
     <br/><br/>
 
     <label for="discount">Discount (%):</label>
-    <input name="discount" type="number" step="0.01" min="0" max="100" placeholder="Discount" value="{{ old('discount', $data->discount ?? '') }}" required />
+    <input name="discount" type="number" step="1" min="0" max="100" placeholder="Discount" value="{{ old('discount', $data->discount ?? '') }}" required />
     <br/><br/>
 
     <label for="notes">Notes:</label>
