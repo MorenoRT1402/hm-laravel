@@ -9,7 +9,6 @@ abstract class BaseController extends Controller{
     protected abstract function get_data(Request $request);
 
     protected function prepareData(Request $request){
-
         $this->validation($request, $this->rules);
         return $this->get_data($request);
     }

@@ -18,15 +18,15 @@ class RoomController extends BaseController{
         'floor_letter' => 'required|string',
         'floor_number' => 'required|integer',
         'facilities' => 'nullable|array',
-        'facilities.*' => 'string', // Cada elemento dentro del JSON debe ser una cadena
+        'facilities.*' => 'string', // Each element within the JSON must be a string
         'rate' => 'required|numeric|min:0',
         'discount' => 'nullable|numeric|min:0|max:100',
-        'status' => 'required|string',
     ];
 
     protected function get_data(Request $request){
-        
-        $floor = $request->input('floor_letter') . $request->input('floor_number');
+        $floor = $request->input('floor_letter') . $request->input('floor_number');        
+        $roomStatusFirst = config('params.room_status')[0];
+    
         return [
             'type' => $request->input('type'),
             'number' => $request->input('number'),
@@ -36,9 +36,8 @@ class RoomController extends BaseController{
             'facilities' => json_encode($request->input('facilities', [])),
             'rate' => $request->input('rate'),
             'discount' => $request->input('discount', 0),
-            'status' => $request->input('status'),
+            'status' => $roomStatusFirst,
         ];
-
     }
 }
 

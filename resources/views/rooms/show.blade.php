@@ -4,7 +4,7 @@
     <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Detalle de Habitación</h1>
 
-        @include('rooms._details', ['room' => $data])
+        @include('rooms._details', ['item' => $data])
 
         <form action="{{ route('rooms.destroy', $data->id) }}" method="POST" class="mt-6" style="display:inline;">
             @csrf
