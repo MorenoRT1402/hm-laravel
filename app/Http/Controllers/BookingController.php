@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Room;
+use App\Mail\BookingEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class BookingController extends BaseController{
@@ -39,6 +41,27 @@ class BookingController extends BaseController{
         $method = 'POST';
         $rooms = Room::all();
         return view("$this->view_root.create", compact('method', 'rooms'));
+    }
+    
+    public function store(Request $request){
+        $data = $this->prepareData($request);
+        
+        $booking = $this->modelClass::create($data);
+
+        $price = $booking->get_price($booking);
+        $room = Room::findOrFail($booking->room_id);
+
+        Mail::to('hello@example.com')->send(new BookingEmail(
+            $request->input('guest'), 
+            $room, 
+            $request->input('check_in'),
+            $request->input('check_out'), 
+            $price,
+            $request->input('notes'),
+            $request->input('picture'),
+            $booking->order_date
+        ));
+        return redirect(route("$this->view_root.index"))->with('success', 'Creado correctamente.');
     }
 
     public function edit($id){

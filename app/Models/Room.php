@@ -14,4 +14,8 @@ class Room extends Model
     // public function booking() : HasMany {
     //     return $this->belongsTo(Room::class);
     // }
+
+    public function get_name() {
+        return $this->type . " " . $this->number;
+    }
 }
