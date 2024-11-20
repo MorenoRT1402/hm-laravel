@@ -26,13 +26,13 @@ abstract class Controller{
             : $this->modelClass::all();
         
         $resource = $this->resource;
+        $create_route = "$this->resource.create";
 
-        return view("{$this->resource}.index", compact('items', 'resource'));
+        return view("{$this->resource}.index", compact('items', 'resource', 'create_route'));
     }
 
     public function create(){
-        $method = 'POST';
-        return view("$this->resource.create", compact('method'));
+        return view("$this->resource.create");
     }
 
     public function show($id){
@@ -43,11 +43,10 @@ abstract class Controller{
     }
 
     public function edit($id){
-        $method = 'PUT';
         $data = $this->modelClass::findOrFail($id);
         $back_index = true;
         
-        return view("$this->resource.edit", compact('method', 'data', 'back_index'));
+        return view("$this->resource.edit", compact('data', 'back_index'));
     }
     
     public function update(Request $request, $id){

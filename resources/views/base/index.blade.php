@@ -5,7 +5,7 @@
         @yield('title', 'Default Title')
     </h1>
 
-    <x-link-button href="@yield('route')" class="ml-6 bg-blue-600 hover:bg-blue-700 text-white">
+    <x-link-button href={{route($create_route)}} class="ml-6 bg-blue-600 hover:bg-blue-700 text-white">
         Crear
     </x-link-button>
 
