@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 abstract class Controller{
 
     protected $request = [];
+    protected $modelClass = '';
     protected $userCheck = true;
     protected $resource = '';
 
     protected function validation($request, $rules){
         $request->validate($rules);
     }
+    
 
     public function index(){
         if (!Auth::check()) {
@@ -22,7 +24,7 @@ abstract class Controller{
 
         // Filter by user only if checking user_id is required
         $items = $this->userCheck
-            ? Auth::user()->{$this->modelClass::tableName()}()->get()
+            ? Auth::user()->{$this->resource}()->get()
             : $this->modelClass::all();
         
         $resource = $this->resource;
@@ -34,7 +36,7 @@ abstract class Controller{
     public function create(){
         return view("$this->resource.create");
     }
-
+    
     public function show($id){
         // We try to find the model by its ID, and if it doesn't exist, it will throw a 404.
         $data = $this->modelClass::findOrFail($id);

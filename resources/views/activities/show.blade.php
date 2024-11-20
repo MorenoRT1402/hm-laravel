@@ -1,12 +1,7 @@
-<h1>Detalle de Actividad</h1>
-@include('activities._details')
+@extends('base.show')
 
-<form action="{{ route('activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta actividad?')">
-        Eliminar Actividad
-    </button>
-</form>
+@section('title', 'Detalle de Actividad')
 
-<a href="{{ route('activities.index') }}">Volver al listado de actividades</a>
+@section('detail-content')
+    @include('activities._details', ['item' => $data])
+@endsection

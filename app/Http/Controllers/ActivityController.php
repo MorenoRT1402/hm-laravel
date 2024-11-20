@@ -6,14 +6,26 @@ use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ActivityController extends Controller{
-    
-    private function validation($request){
-        $request->validate([
-            'type' => 'required|string',
-            'datetime' => 'required|string',
-            'notes' => 'nullable|string',
-        ]);
+class ActivityController extends BaseController
+{
+    protected $resource = "activities";
+    protected $modelClass = Activity::class;
+    protected $userCheck = true;
+
+    protected $rules = [
+        'type' => 'required|string',
+        'datetime' => 'required|string',
+        'notes' => 'nullable|string',
+    ];
+
+    protected function get_data(Request $request)
+    {
+        return [
+            'type' => $request->input('type'),
+            'user_id' => $request->user()->id,
+            'datetime' => $request->input('datetime'),
+            'notes' => $request->input('notes'),
+        ];
     }
 
     private function checkUserPermission(Activity $activity){
@@ -22,83 +34,44 @@ class ActivityController extends Controller{
         }
     }
 
-    public function index()
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-    
-        return view("activities.index", ['activities' => Auth::user()->activities()->get()]);
-    }
-    
-
-    public function create(){
-        $method = 'POST';
-        return view("activities.create", compact('method'));
-    }
-
-    public function store(Request $request){
-
-        $this->validation($request);
-
-        Activity::create([
-            'type' => $request->input('type'),
-            'user_id' => $request->user()->id,
-            'datetime' => $request->input('datetime'),
-            'notes' => $request->input('notes'),
-        ]);
-        return redirect(route('activities.store'));
-    }
-
-    public function show($id)
-    {
-        // We try to find the activity by its ID, and if it doesn't exist, it will throw a 404.
-        $activity = Activity::findOrFail($id);
-    
-        $this->checkUserPermission($activity);
+    public function show($id){
+        $data = $this->modelClass::findOrFail($id);
+        $this->checkUserPermission($data);
+        $back_to = "$this->resource.index";
         
-        return view('activities.show', compact('activity'));
+        return view("$this->resource.show", compact('data', 'back_to'));
     }
-    
 
-    public function edit($id){
-        $method = 'PUT';
-        $activity = Activity::findOrFail($id);
-        $back_index = true;
-    
-        $this->checkUserPermission($activity);
-    
-        return view('activities.edit', compact('method', 'activity', 'back_index'));
-    }
-    
+    // public function edit($id)
+    // {
+    //     $method = 'PUT';
+    //     $activity = $this->modelClass::findOrFail($id);
+    //     $this->check($activity);
 
-    public function update(Request $request, $id){
-        $activity = Activity::findOrFail($id);
-    
-        $this->checkUserPermission($activity);
-    
-        $this->validation($request);
-    
-        $activity->update([
-            'type' => $request->input('type'),
-            'datetime' => $request->input('datetime'),
-            'notes' => $request->input('notes'),
-        ]);
-    
-        return redirect()->route('activities.show', $activity->id)
-                         ->with('success', 'Actividad actualizada correctamente.');
-    }
-    
-    public function destroy($id)
-    {
-        $activity = Activity::findOrFail($id);
-    
-        $this->checkUserPermission($activity);
-    
-        $activity->delete();
-    
-        return redirect()->route('activities.index')
-                         ->with('success', 'Actividad eliminada correctamente.');
-    }
-    
+    //     return view('activities.edit', compact('method', 'activity'));
+    // }
+
+    // public function update(Request $request, $id)
+    // {
+    //     $activity = $this->modelClass::findOrFail($id);
+    //     $this->validateUserPermission($activity);
+
+    //     $this->validateResource($request);
+
+    //     $activity->update($this->get_data($request));
+
+    //     return redirect()->route('activities.show', $activity->id)
+    //         ->with('success', 'Actividad actualizada correctamente.');
+    // }
+
+    // public function destroy($id)
+    // {
+    //     $activity = $this->modelClass::findOrFail($id);
+    //     $this->validateUserPermission($activity);
+
+    //     $activity->delete();
+
+    //     return redirect()->route('activities.index')
+    //         ->with('success', 'Actividad eliminada correctamente.');
+    // }
 }

@@ -1,4 +1,4 @@
-<p><strong>ID:</strong> {{ $activity->id }}</p>
-<p><strong>Tipo:</strong> {{ $activity->type }}</p>
-<p><strong>Fecha y Hora:</strong> {{ $activity->datetime }}</p>
-<p><strong>Notas:</strong> {{ $activity->notes }}</p>
+<p><strong>ID:</strong> {{ $item->id }}</p>
+<p><strong>Tipo:</strong> {{ $item->type }}</p>
+<p><strong>Fecha y Hora:</strong> {{ $item->datetime }}</p>
+<p><strong>Notas:</strong> {{ $item->notes }}</p>
