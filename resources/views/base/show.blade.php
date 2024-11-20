@@ -20,7 +20,7 @@
             </form>
         @endisset
 
-        <a href="@yield('back-link', route('rooms.index'))" class="mt-4 inline-block text-blue-600 hover:text-blue-700">
+        <a href={{route($back_to)}} class="mt-4 inline-block text-blue-600 hover:text-blue-700">
             Volver al índice
         </a>
     </div>

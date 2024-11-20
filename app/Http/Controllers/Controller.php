@@ -38,8 +38,9 @@ abstract class Controller{
     public function show($id){
         // We try to find the model by its ID, and if it doesn't exist, it will throw a 404.
         $data = $this->modelClass::findOrFail($id);
+        $back_to = "$this->resource.index";
         
-        return view("$this->resource.show", compact('data'));
+        return view("$this->resource.show", compact('data', 'back_to'));
     }
 
     public function edit($id){

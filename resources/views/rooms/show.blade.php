@@ -6,3 +6,5 @@
     @include('rooms._details', ['item' => $data])
 @endsection
 
+@section('back-link', 'rooms.index')
+

@@ -1,5 +1,5 @@
 @extends('contacts.form')
 
-<h1>Crear Mensaje</h1>
-
+@section('title', 'Crear Contact')
 @section('form_action', route('contacts.store'))
+@section('button_text', 'Crear')

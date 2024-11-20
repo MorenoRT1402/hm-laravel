@@ -1,26 +1,53 @@
-<form action="@yield('form_action')" method="POST">
-    @csrf
-    @method($method ?? 'POST')
+@extends('layouts.app')
 
-    <label for="customer">Customer:</label>
-    <input name="customer" type="text" placeholder="Customer Name" value="{{ old('customer', $data->customer ?? '') }}" required />
-    <br/><br/>
+@section('content')
+<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Formulario de Cliente</h1>
 
-    <label for="email">Email:</label>
-    <input name="email" type="email" placeholder="Email Address" value="{{ old('email', $data->email ?? '') }}" required />
-    <br/><br/>
+    <form action="@yield('form_action')" method="POST" class="space-y-4">
+        @csrf
+        @method(isset($data->id) ? 'PUT' : 'POST')
 
-    <label for="phone">Phone:</label>
-    <input name="phone" type="text" placeholder="Phone Number" value="{{ old('phone', $data->phone ?? '') }}" />
-    <br/><br/>
+        <div>
+            <label for="customer" class="block text-sm font-medium text-gray-700">Nombre del Cliente</label>
+            <input name="customer" id="customer" type="text" placeholder="Nombre del Cliente" 
+                   value="{{ old('customer', $data->customer ?? '') }}" required 
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <label for="subject">Subject:</label>
-    <input name="subject" type="text" placeholder="Subject" value="{{ old('subject', $data->subject ?? '') }}" required />
-    <br/><br/>
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+            <input name="email" id="email" type="email" placeholder="Correo Electrónico" 
+                   value="{{ old('email', $data->email ?? '') }}" required 
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <label for="comment">Comment:</label>
-    <textarea name="comment" placeholder="Comment" rows="4" required>{{ old('comment', $data->comment ?? '') }}</textarea>
-    <br/><br/>
+        <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
+            <input name="phone" id="phone" type="text" placeholder="Número de Teléfono" 
+                   value="{{ old('phone', $data->phone ?? '') }}" 
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <button>Enviar</button>
-</form>
+        <div>
+            <label for="subject" class="block text-sm font-medium text-gray-700">Asunto</label>
+            <input name="subject" id="subject" type="text" placeholder="Asunto" 
+                   value="{{ old('subject', $data->subject ?? '') }}" required 
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
+
+        <div>
+            <label for="comment" class="block text-sm font-medium text-gray-700">Comentario</label>
+            <textarea name="comment" id="comment" placeholder="Comentario" rows="4" required
+                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">{{ old('comment', $data->comment ?? '') }}</textarea>
+        </div>
+
+        <div>
+            <button type="submit"
+                    class="w-full bg-blue-600 font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200 text-white">
+                @yield('button_text')
+            </button>
+        </div>
+    </form>
+</div>
+@endsection

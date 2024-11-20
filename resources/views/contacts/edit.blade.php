@@ -1,5 +1,5 @@
 @extends('contacts.form')
 
-<h1>Editar Habitación</h1>
-
+@section('title', 'Editar Contact')
 @section('form_action', route('contacts.update', $data->id))
+@section('button_text', 'Actualizar')
