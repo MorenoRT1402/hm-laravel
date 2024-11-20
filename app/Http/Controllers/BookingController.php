@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class BookingController extends BaseController{
-    protected $view_root = "bookings";
+    protected $resource = "bookings";
     protected $modelClass = Booking::class;
     protected $userCheck = false;
     
@@ -40,7 +40,7 @@ class BookingController extends BaseController{
     public function create(){
         $method = 'POST';
         $rooms = Room::all();
-        return view("$this->view_root.create", compact('method', 'rooms'));
+        return view("$this->resource.create", compact('method', 'rooms'));
     }
     
     public function store(Request $request){
@@ -61,7 +61,7 @@ class BookingController extends BaseController{
             $request->input('picture'),
             $booking->order_date
         ));
-        return redirect(route("$this->view_root.index"))->with('success', 'Creado correctamente.');
+        return redirect(route("$this->resource.index"))->with('success', 'Creado correctamente.');
     }
 
     public function edit($id){
@@ -70,6 +70,6 @@ class BookingController extends BaseController{
         $data = $this->modelClass::findOrFail($id);
         $back_index = true;
         
-        return view("$this->view_root.edit", compact('method', 'data', 'back_index', 'rooms'));
+        return view("$this->resource.edit", compact('method', 'data', 'back_index', 'rooms'));
     }
 }

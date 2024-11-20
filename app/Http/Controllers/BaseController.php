@@ -18,13 +18,13 @@ abstract class BaseController extends Controller{
 
         $this->modelClass::create($data);
 
-        return redirect(route("$this->view_root.index"))->with('success', 'Creado correctamente.');
+        return redirect(route("$this->resource.index"))->with('success', 'Creado correctamente.');
     }
 
     public function destroy($id){
         $data = $this->modelClass::findOrFail($id);
         $data->delete();
-        return redirect(route("$this->view_root.index"))
+        return redirect(route("$this->resource.index"))
                ->with('success', 'Eliminado correctamente.');
     }
 }

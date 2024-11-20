@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
     <h1 class="text-4xl uppercase font-black m-6 text-gray-800">Rooms</h1>
@@ -8,4 +8,10 @@
     </x-link-button>
 
     <x-resource-list :items="$rooms" resource="rooms" />
-@endsection
+@endsection --}}
+
+
+@extends('base.index')
+
+@section('title', 'Rooms')
+@section('route', route('rooms.create'))

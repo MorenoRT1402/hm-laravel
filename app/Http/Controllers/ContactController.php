@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ContactController extends BaseController
 {
-    protected $view_root = "contacts";
+    protected $resource = "contacts";
     protected $modelClass = Contact::class;
     protected $userCheck = false;
     

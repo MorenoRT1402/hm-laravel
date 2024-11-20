@@ -6,7 +6,7 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 
 class RoomController extends BaseController{    
-    protected $view_root = "rooms";
+    protected $resource = "rooms";
     protected $modelClass = Room::class;
     protected $userCheck = false;
     
