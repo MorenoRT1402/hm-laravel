@@ -15,7 +15,6 @@ class BookingController extends BaseController{
     
     protected $rules = [
         'guest' => 'required|string|max:255',
-        'picture' => 'nullable|string|max:255',
         'check_in' => 'required|date|after_or_equal:order_date',
         'check_out' => 'required|date|after:check_in',
         'discount' => 'required|numeric|min:0|max:100',
@@ -32,15 +31,14 @@ class BookingController extends BaseController{
             'check_out' => $request->input('check_out'),
             'discount' => $request->input('discount'),
             'notes' => $request->input('notes'), 
-            'status' => $request->input('status'),
+            'status' => config('params.booking_status')[0],
             'room_id' => $request->input('room_id'),
         ];
     }
 
     public function create(){
-        $method = 'POST';
         $rooms = Room::all();
-        return view("$this->resource.create", compact('method', 'rooms'));
+        return view("$this->resource.create", compact('rooms'));
     }
     
     public function store(Request $request){

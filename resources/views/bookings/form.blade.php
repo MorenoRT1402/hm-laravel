@@ -1,51 +1,72 @@
-<form action="@yield('form_action')" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method($method ?? 'POST')
+@extends('layouts.app')
 
-    <label for="guest">Guest:</label>
-    <input name="guest" type="text" placeholder="Guest Name" value="{{ old('guest', $data->guest ?? '') }}" required />
-    <br/><br/>
+@section('content')
+<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Formulario de Reserva</h1>
 
-    <label for="picture">Picture</label>
-    <input name="picture" type="file" placeholder="Upload Picture" value="{{ old('picture', $data->picture ?? '') }}" />
-    <br/><br/>
+    <form action="@yield('form_action')" method="POST" enctype="multipart/form-data" class="space-y-4">
+        @csrf
+        @method(isset($data->id) ? 'PUT' : 'POST')
 
-    <label for="check_in">Check-In Date:</label>
-    <input name="check_in" type="date" value="{{ old('check_in', $data->check_in ?? '') }}" required />
-    <br/><br/>
+        <div>
+            <label for="guest" class="block text-sm font-medium text-gray-700">Huésped</label>
+            <input name="guest" type="text" id="guest" placeholder="Nombre del huésped" 
+                   value="{{ old('guest', $data->guest ?? '') }}" required
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <label for="check_out">Check-Out Date:</label>
-    <input name="check_out" type="date" value="{{ old('check_out', $data->check_out ?? '') }}" required />
-    <br/><br/>
+        <div>
+            <label for="picture" class="block text-sm font-medium text-gray-700">Imagen</label>
+            <input name="picture" type="file" id="picture"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <label for="discount">Discount (%):</label>
-    <input name="discount" type="number" step="0.01" min="0" max="100" placeholder="Discount" value="{{ old('discount', $data->discount ?? '') }}" required />
-    <br/><br/>
+        <div>
+            <label for="check_in" class="block text-sm font-medium text-gray-700">Fecha de Check-In</label>
+            <input name="check_in" type="date" id="check_in" 
+                   value="{{ old('check_in', $data->check_in ?? '') }}" required
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <label for="notes">Notes:</label>
-    <textarea name="notes" placeholder="Add notes" rows="4">{{ old('notes', $data->notes ?? '') }}</textarea>
-    <br/><br/>
+        <div>
+            <label for="check_out" class="block text-sm font-medium text-gray-700">Fecha de Check-Out</label>
+            <input name="check_out" type="date" id="check_out" 
+                   value="{{ old('check_out', $data->check_out ?? '') }}" required
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <label for="room_id">Room:</label>
-    <select name="room_id" required>
-        <option value="">Select Room</option>
-        @foreach($rooms as $room)
-            <option value="{{ $room->id }}" {{ (old('room_id', $data->room_id ?? '') == $room->id) ? 'selected' : '' }}>
-                {{ $room->type . $room->number }}
-            </option>
-        @endforeach
-    </select>
-    <br/><br/>
+        <div>
+            <label for="discount" class="block text-sm font-medium text-gray-700">Descuento (%)</label>
+            <input name="discount" type="number" id="discount" step="0.01" min="0" max="100" placeholder="Descuento" 
+                   value="{{ old('discount', $data->discount ?? '') }}" required
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" />
+        </div>
 
-    <label for="status">Status:</label>
-    <select name="status" required>
-        @foreach(config('params.booking_status') as $status)
-            <option value="{{ $status }}" {{ (old('status', $data->status ?? '') == $status) ? 'selected' : '' }}>
-                {{ ucfirst($status) }}
-            </option>
-        @endforeach
-    </select>
-    <br/><br/>
+        <div>
+            <label for="notes" class="block text-sm font-medium text-gray-700">Notas</label>
+            <textarea name="notes" id="notes" placeholder="Agregar notas" rows="4"
+                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">{{ old('notes', $data->notes ?? '') }}</textarea>
+        </div>
 
-    <button type="submit">Enviar</button>
-</form>
+        <div>
+            <label for="room_id" class="block text-sm font-medium text-gray-700">Habitación</label>
+            <select name="room_id" id="room_id" required
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                <option value="">Selecciona una habitación</option>
+                @foreach($rooms as $room)
+                    <option value="{{ $room->id }}" {{ old('room_id', $data->room_id ?? '') == $room->id ? 'selected' : '' }}>
+                        {{ $room->type . ' ' . $room->number }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div>
+            <button type="submit"
+                    class="w-full bg-blue-600 font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200 text-white">
+                @yield('button_text')
+            </button>
+        </div>
+    </form>
+</div>
+@endsection

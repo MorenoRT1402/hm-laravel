@@ -1,5 +1,5 @@
 @extends('bookings.form')
 
-<h1>Editar Habitación</h1>
-
+@section('title', 'Editar Reserva')
 @section('form_action', route('bookings.update', $data->id))
+@section('button_text', 'Actualizar')
