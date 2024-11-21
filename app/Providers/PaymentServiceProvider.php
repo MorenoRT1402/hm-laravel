@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 use App\Contracts\PaymentProvider;
-use App\Services\PaypalPaymentProvider;
+use App\Services\StripePaymentProvider;
 
 class PaymentServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,7 @@ class PaymentServiceProvider extends ServiceProvider
     public function register(): void{
         $this->app->bind(
             PaymentProvider::class, 
-            PaypalPaymentProvider::class
+            StripePaymentProvider::class
         );
     }
 

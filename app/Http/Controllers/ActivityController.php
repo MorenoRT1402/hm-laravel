@@ -41,37 +41,4 @@ class ActivityController extends BaseController
         
         return view("$this->resource.show", compact('data', 'back_to'));
     }
-
-    // public function edit($id)
-    // {
-    //     $method = 'PUT';
-    //     $activity = $this->modelClass::findOrFail($id);
-    //     $this->check($activity);
-
-    //     return view('activities.edit', compact('method', 'activity'));
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $activity = $this->modelClass::findOrFail($id);
-    //     $this->validateUserPermission($activity);
-
-    //     $this->validateResource($request);
-
-    //     $activity->update($this->get_data($request));
-
-    //     return redirect()->route('activities.show', $activity->id)
-    //         ->with('success', 'Actividad actualizada correctamente.');
-    // }
-
-    // public function destroy($id)
-    // {
-    //     $activity = $this->modelClass::findOrFail($id);
-    //     $this->validateUserPermission($activity);
-
-    //     $activity->delete();
-
-    //     return redirect()->route('activities.index')
-    //         ->with('success', 'Actividad eliminada correctamente.');
-    // }
 }

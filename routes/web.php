@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,7 +16,19 @@ Route::get('/', function () {
 Route::get('/about', function () { return view('about'); })->name('about');
 Route::get('/contact', function () { return view('contact'); })->name('contact');
 
-Route::resource('test', TestController::class);
+// Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
+// Route::post('/test', 'App\Http\Controllers\StripeController@test');
+// Route::post('/live', 'App\Http\Controllers\StripeController@live');
+// Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');
+
+Route::get('/checkout', function () {
+    return view('checkout');
+})->name('checkout');
+
+Route::get('/success', function () {
+    return redirect()->route('bookings.index')->with('success', 'Pago exitoso y reserva creada.');
+})->name('success');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');

@@ -42,37 +42,54 @@ class BookingController extends BaseController{
         return view("$this->resource.create", compact('rooms'));
     }
 
-    
-    function pay(array $data, PaymentProvider $payment_provider) {
-        $payment_provider->processPayment($data);
-        return true;
-    }
-    
-    public function store(Request $request){
+    private function createBooking(Request $request): Booking{
         $data = $this->prepareData($request);
+        return $this->modelClass::create($data);
+    }
 
-        $booking = $this->modelClass::create($data);
+    private function handlePayment(Booking $booking): string{
+        $paymentProvider = app(PaymentProvider::class);
+        $amount = round($booking->get_price($booking) * 100);
+        $productName = 'Room Booking';
 
-        $price = $booking->get_price($booking);
+        $data = [
+            'amount' => $amount,
+            'product_name' => $productName,
+        ];
+
+        return $paymentProvider->processPayment($data);
+    }
+
+    private function sendBookingEmail(Request $request, Booking $booking): void{
         $room = Room::findOrFail($booking->room_id);
-
-        if (!$this->pay($data, app(PaymentProvider::class))) {
-            return redirect()->back()->with('error', 'Error al procesar el pago.');
-        }
+        $price = $booking->get_price($booking);
 
         Mail::to('hello@example.com')->send(new BookingEmail(
-            $request->input('guest'), 
-            $room, 
+            $request->input('guest'),
+            $room,
             $request->input('check_in'),
-            $request->input('check_out'), 
+            $request->input('check_out'),
             $price,
             $request->input('notes'),
             $request->input('picture'),
             $booking->order_date
         ));
-
-        return redirect(route("$this->resource.index"))->with('success', 'Reserva creada correctamente.');
     }
+
+    public function store(Request $request){
+        $booking = $this->createBooking($request);
+
+        try {
+            $paymentUrl = $this->handlePayment($booking);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al procesar el pago: ' . $e->getMessage());
+        }
+
+        $this->sendBookingEmail($request, $booking);
+
+        return redirect()->away($paymentUrl);
+    }
+
 
     public function edit($id){
         $method = 'PUT';
