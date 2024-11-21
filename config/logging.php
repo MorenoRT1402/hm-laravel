@@ -82,6 +82,12 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'payment' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/payments/payment.log'),
+            'level' => 'debug',
+        ],
+
         'papertrail' => [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),

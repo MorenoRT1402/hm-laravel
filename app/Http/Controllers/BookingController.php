@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Mail\BookingEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\Contracts\PaymentProvider;
 
 class BookingController extends BaseController{
     protected $resource = "bookings";
@@ -40,14 +41,24 @@ class BookingController extends BaseController{
         $rooms = Room::all();
         return view("$this->resource.create", compact('rooms'));
     }
+
+    
+    function pay(array $data, PaymentProvider $payment_provider) {
+        $payment_provider->processPayment($data);
+        return true;
+    }
     
     public function store(Request $request){
         $data = $this->prepareData($request);
-        
+
         $booking = $this->modelClass::create($data);
 
         $price = $booking->get_price($booking);
         $room = Room::findOrFail($booking->room_id);
+
+        if (!$this->pay($data, app(PaymentProvider::class))) {
+            return redirect()->back()->with('error', 'Error al procesar el pago.');
+        }
 
         Mail::to('hello@example.com')->send(new BookingEmail(
             $request->input('guest'), 
@@ -59,7 +70,8 @@ class BookingController extends BaseController{
             $request->input('picture'),
             $booking->order_date
         ));
-        return redirect(route("$this->resource.index"))->with('success', 'Creado correctamente.');
+
+        return redirect(route("$this->resource.index"))->with('success', 'Reserva creada correctamente.');
     }
 
     public function edit($id){
