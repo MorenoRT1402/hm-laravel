@@ -88,6 +88,24 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                {{ __('About') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('activities.index')" :active="request()->routeIs('activities.index')">
+                {{ __('Actividades') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms.index')">
+                {{ __('Habitaciones') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+                {{ __('Reservas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
+                {{ __('Buzón') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
