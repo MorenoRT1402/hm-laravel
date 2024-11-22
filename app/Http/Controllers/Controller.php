@@ -28,7 +28,7 @@ abstract class Controller{
             : $this->modelClass::all();
         
         $resource = $this->resource;
-        $create_route = "$this->resource.create";
+        $create_route = route("$this->resource.create");
 
         return view("{$this->resource}.index", compact('items', 'resource', 'create_route'));
     }
