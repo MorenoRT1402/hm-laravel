@@ -17,7 +17,7 @@ class StripePaymentProvider implements PaymentProvider
             'line_items' => [
                 [
                     'price_data' => [
-                        'currency' => 'gbp',
+                        'currency' => 'eur',
                         'product_data' => [
                             'name' => $data['product_name'] ?? 'Reservation',
                         ],

@@ -11,7 +11,7 @@ class TableController extends Controller{
             'rooms' => \App\Models\Room::class,
             'users' => \App\Models\User::class,
             'contacts' => \App\Models\Contact::class,
-            'activity' => \App\Models\Activity::class,
+            'activities' => \App\Models\Activity::class,
         ];
 
         if (!array_key_exists($resource, $models)) {
