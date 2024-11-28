@@ -8,10 +8,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check user
-        run: |
-          whoami
-          id
       - name: Deploy
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -20,11 +16,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            sudo su
             cd /var/www/hm-laravel
-            git pull
-            composer install --no-dev
-            php artisan migrate
-            systemctl restart apache2
+            sudo git pull
+            sudo composer install --no-dev
+            sudo php artisan migrate --force
+            sudo systemctl restart apache2
       - name: Alive Test
         run: date
