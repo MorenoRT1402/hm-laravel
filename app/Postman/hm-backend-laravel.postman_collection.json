@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "d613015b-beaf-406c-9d09-00022ba4f1b2",
+		"name": "hm-backend-laravel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32615399"
+	},
+	"item": [
+		{
+			"name": "live",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://ec2-35-180-227-189.eu-west-3.compute.amazonaws.com/live",
+					"protocol": "http",
+					"host": [
+						"ec2-35-180-227-189",
+						"eu-west-3",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
