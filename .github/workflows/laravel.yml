@@ -2,23 +2,26 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up SSH
-        uses: shivammathur/setup-ssh@v2
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Deploy
+      - name: Check user
         run: |
-          ssh ubuntu@ip-172-31-46-203 '
-            cd /var/www/html/hm-laravel
+          whoami
+          id
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/hm-laravel
             git pull
             composer install --no-dev
             php artisan migrate
             systemctl restart apache2
-          '
