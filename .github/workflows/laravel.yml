@@ -20,8 +20,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            sudo su
             cd /var/www/hm-laravel
             git pull
             composer install --no-dev
             php artisan migrate
             systemctl restart apache2
+      - name: Alive Test
+        run: date

@@ -24,6 +24,9 @@ Route::get('/success', function () {
     return redirect()->route('bookings.index')->with('success', 'Pago exitoso y reserva creada.');
 })->name('success');
 
+Route::get('/alive', function () {
+    return response()->json(['datetime' => now()->toDateTimeString()]);
+})->name('alive');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
